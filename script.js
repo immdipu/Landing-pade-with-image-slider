@@ -3,6 +3,7 @@ const btns = document.querySelectorAll(".btn");
 const btnleft = document.querySelector(".leftarrow");
 const btnright = document.querySelector(".rightarrow");
 const dotContainer = document.querySelector(".dotcontainer");
+const allSection = document.querySelectorAll('.section')
 
 slide.forEach((item, i) => (item.style.transform = `translateX(${100 * i}%)`));
 
@@ -89,3 +90,31 @@ dot.forEach(function (m) {
 });
 
 dotactivate(0);
+
+
+
+
+/* SECTION REVEALING*/
+
+
+const revealSection = function (entries, observer) {
+    const [entry] = entries;
+    if (!entry.isIntersecting) return;
+    entry.target.classList.remove('hidden');
+    observer.unobserve(entry.target);
+}
+
+
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+    root: null,
+    threshold: 0.07,
+
+});
+
+
+allSection.forEach(function (section) {
+    sectionObserver.observe(section);
+    section.classList.add('hidden');
+
+});
